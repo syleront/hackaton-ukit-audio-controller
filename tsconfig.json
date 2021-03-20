@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "ES2019",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": true,
+    "declarationDir": "dist/package",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  }
+}

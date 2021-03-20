@@ -1,0 +1,12 @@
+# build dir
+dist/debug
+dist/production
+src/tests
+
+# node modules
+node_modules
+
+# debug and production
+.env
+.npmrc
+.idea
