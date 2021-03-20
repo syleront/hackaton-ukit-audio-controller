@@ -6,7 +6,8 @@
   "scripts": {
     "debug-build": "rollup -c",
     "production-build": "rollup -c --environment NODE_ENV:production",
-    "lib-build": "rollup -c --environment NODE_ENV:lib"
+    "lib-build": "rollup -c --environment NODE_ENV:lib",
+    "prepublish": "rollup -c --environment NODE_ENV:lib"
   },
   "author": "Syleront",
   "license": "ISC",
