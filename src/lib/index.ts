@@ -145,7 +145,7 @@ export class AudioController {
 
   public async speakOff(): Promise<void> {
     if (this.isSpeakEnabled()) {
-      return this._initMicMediaStream();
+      return this._destroyMicMediaStream();
     }
   }
 }
