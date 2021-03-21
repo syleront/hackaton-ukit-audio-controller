@@ -5,16 +5,20 @@ import { SoundBuffer } from "./sound-buffer";
 
 import request from "./request";
 
-interface User {
+export interface User {
   id: string;
 }
 
-interface UserSpeak extends User {
+export interface UserSpeak extends User {
   blob: Array<number>;
   sampleRate: number;
 }
 
-interface EventTypes {
+export interface AudioSticker {
+  sticker: string;
+}
+
+export interface EventTypes {
   user_join: User;
   user_leave: User;
   user_speak: User;
@@ -24,6 +28,7 @@ export class AudioController {
   private readonly _sampleRate = 48000;
 
   private readonly _baseUrl: string = null;
+  private readonly _staticUrl: string = null;
   private readonly _bufferSize: number = null;
   private readonly _maxBufferLength: number = null;
   private readonly _triggerBufferLength: number = null;
@@ -43,10 +48,17 @@ export class AudioController {
       throw new Error("maxBufferLength must be greater than triggerBufferLength");
     }
 
-    this._baseUrl = baseUrl;
+    this._baseUrl = baseUrl.replace(/\/$/, "");
+    this._staticUrl = `${baseUrl}/static`
     this._bufferSize = bufferSize;
     this._maxBufferLength = maxBufferLength;
     this._triggerBufferLength = triggerBufferLength;
+  }
+
+  private async _playAudioStream(src: string): Promise<void> {
+    const audio = document.createElement("audio");
+    audio.src = src;
+    return audio.play();
   }
 
   private _initSocketEvents(): void {
@@ -60,8 +72,12 @@ export class AudioController {
       this.events.emit("user_leave", data);
     });
 
-    this._socket.on("user_speak", (data) => {
+    this._socket.on("user_speak", (data: User) => {
       this.events.emit("user_speak", data);
+    });
+
+    this._socket.on("audio_sticker", async (data: AudioSticker) => {
+      await this._playAudioStream(`${this._staticUrl}/${data.sticker}.mp3`);
     });
 
     this._socket.on("voice", (data: UserSpeak) => {
@@ -118,6 +134,10 @@ export class AudioController {
     this._micCtx = new AudioContext({ sampleRate: this._sampleRate });
     this._micMediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
     await this._handleMicMediaStream();
+  }
+
+  public sendAudioSticker(sticker: string): void {
+    this._socket.emit("audio_sticker", { sticker });
   }
 
   public getSocketId(): string {
