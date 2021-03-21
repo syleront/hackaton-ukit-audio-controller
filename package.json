@@ -1,6 +1,6 @@
 {
   "name": "hackaton-uikit-audio-controller",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Client wrapper for donstu hackaton backend",
   "main": "dist/package/lib/index.js",
   "scripts": {

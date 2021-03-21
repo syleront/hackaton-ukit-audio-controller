@@ -102,3 +102,55 @@ audioController.getUsers().then((users) => {
   }
 });
 ```
+
+---
+
+`sendAudioSticker(sticker: string) => void`
+
+Функция отправки аудио стикеров
+
+Доступные на данный момент стикеры: `airhorn`, `boi`, `bruh`, `cricket`, `wow`
+
+```js
+audioController.sendAudioSticker("bruh");
+```
+
+### Ивенты
+
+Пример использования ивента
+
+```js
+audioController.events.on(EventType, (data) => {
+  console.log(data);
+});
+```
+
+#### Типы ивентов
+
+Ивент подключения юзера к серверу:
+
+`user_join`: `{ id: string }`
+
+```js
+audioController.events.on("user_join", (user) => {
+  someLocalList.push(user.id);
+});
+```
+
+---
+
+Ивент отключения юзера от сервера:
+
+`user_leave`: `{ id: string }`
+
+---
+
+Ивент приема звука от пользователя
+
+`user_speak`: `{ id: string }`
+
+---
+
+Ивент отключения юзера от сервера:
+
+`user_leave`: `{ id: string }`
