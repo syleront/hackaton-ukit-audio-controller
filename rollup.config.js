@@ -55,9 +55,9 @@ if (isLibBuild) {
       json(),
       copy({
         targets: [
-          { src: "src/public/js/*", dest: path.join(outputPath, "static", "js") },
+          { src: "src/tests/public/js/*", dest: path.join(outputPath, "static", "js") },
           {
-            src: "src/public/index.html", dest: outputPath, transform: (contents) => {
+            src: "src/tests/public/index.html", dest: outputPath, transform: (contents) => {
               return contents.toString().replace(/%staticPath%/g, staticPath);
             }
           }
